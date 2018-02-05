@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using ResortBookingApp.Models;
 
 namespace ResortBookingApp
 {
@@ -29,6 +31,9 @@ namespace ResortBookingApp
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddDbContext<BookingsContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("BookingsContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +57,9 @@ namespace ResortBookingApp
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller}.aspx/{action}/{id}",
+                    new {controller="Bookings",action="Index",id=""});
             });
         }
     }

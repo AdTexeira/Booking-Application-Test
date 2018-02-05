@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>University of South Florida</title>
+    <script>
+        function getwordcount()
+        {
+            var wbody = document.body.innerText;
+            var count = wbody.replace(/[\r\n]+/g, " ").replace(/\t/g, " ").split(" ").length;
+            var tagcount = 0;
+
+            //var tagcount = document.body.childElementCount;
+            for (object child in document.body.childNodes) {
+
+                if (child.childNodes.length>1) {
+
+                    tagcount=tagcount+getcontrolwordcount(child);
+                }
+                else
+                {
+                    tagcount++;
+                }
+            }
+            var abc=tagcount;
+        }
+
+        function getcontrolwordcount(control)
+        {
+            var count = 0;
+            for (var child in control) {
+                if (child.childNodes.length>1) {
+                    count =count+getcontrolwordcount(child);
+                }
+                else {
+                    count++;
+                }
+            }
+            return count;
+        }
+    </script>
+</head>
+<body>
+    <p>Welcome to USF</p>
+    <div id="div1">Let's start!!!</div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>COURSE</th>
+                <th>CODE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>DIS</td>
+                <td>6093</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>SDM</td>
+                <td>6094</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>DM</td>
+                <td>6095</td>
+            </tr>
+        </tbody>
+    </table>
+
+<button id="btn_wordcount" onclick="getwordcount()" value="Word Count"></button>
+</body>
+</html>
